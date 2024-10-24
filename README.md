@@ -240,3 +240,4 @@ export default tseslint.config(
 Run `npm run dev`. ;P
 
 You should have something like this:
+![image](https://github.com/user-attachments/assets/bbda8a3c-8031-4c98-8b40-b79c0e35cace)
