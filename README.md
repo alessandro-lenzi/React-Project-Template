@@ -82,6 +82,8 @@ Create a folder `.vscode` and add a new file called `settings.json` with the con
 }
 ```
 
+Run `npm i --save clsx` to add [clsx](https://github.com/lukeed/clsx) support for easier work with TailwindCSS.
+
 Also, rename `postcss.config.js` to `postcss.config.cjs` to prevent ES module errors from PostCSS dependency.
 
 # React + TypeScript + Vite
