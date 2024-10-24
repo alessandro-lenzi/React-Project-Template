@@ -1,3 +1,17 @@
+# React Project Template
+
+A React standard template with TS, Eslint, TailwindCSS and productive configurations
+
+## Steps:
+
+Create a directory for your project, e.g. "my-project".
+
+`cd [my-project]` to enter the project folder.
+
+`npm create vite@latest .` to create the project using the latest Vite, with React + SWC support.
+
+`npm i -D vite-plugin-svgr` to add easy SVG support with svgr library and with vite configuration. Follow [vite-plugin-svgr installation steps](https://github.com/pd4d10/vite-plugin-svgr) to finish it's setup.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
