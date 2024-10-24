@@ -30,6 +30,9 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <TestAlias />
+      <h1 className="text-3xl font-bold underline">
+        Hello world with TailwindCSS!
+      </h1>
     </>
   );
 }

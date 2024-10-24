@@ -2,23 +2,23 @@
 
 A React standard template with TS, Eslint, TailwindCSS and productive configurations
 
-## Steps:
+## Steps
 
 1. Create a directory for your project, e.g. "my-project"
 
-`cd [my-project]` to enter the project folder.
+Run `cd [my-project]` to enter the project folder.
 
 2. Vite + React + SWC setup
 
-`npm create vite@latest .` to create the project using the latest Vite, with React + SWC support.
+Run `npm create vite@latest .` to create the project using the latest Vite, with React + SWC support.
 
 3. SVG component support on React
 
-`npm i -D vite-plugin-svgr` to add easy SVG support with svgr library and with vite configuration. Follow [vite-plugin-svgr installation steps](https://github.com/pd4d10/vite-plugin-svgr) to finish it's setup.
+Run `npm i -D vite-plugin-svgr` to add easy SVG support with svgr library and with vite configuration. Follow [vite-plugin-svgr installation steps](https://github.com/pd4d10/vite-plugin-svgr) to finish it's setup.
 
 4. Add alias path support: @/... for imports
 
-`npm i -D @types/node` to add path resolution for vite's configuration.
+Run `npm i -D @types/node` to add path resolution for vite's configuration.
 
 Your `vite.config.js` should be like:
 
@@ -50,6 +50,39 @@ Add the following lines to your `tsconfig.json` file (or `tsconfig.app.json` and
     }
   }
 ```
+
+5. Install Tailwind CSS
+
+Run `npm i -D tailwindcss postcss autoprefixer` to add tailwind and its peer dependencies.
+
+Run `npx tailwindcss init` to create the `tailwind.config.js` file.
+
+Follow the remaining instructions from [tailwind documentation](https://tailwindcss.com/docs/installation/using-postcss).
+
+Your `tailwind.config.js` should be like this:
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{html,js,ts,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+Create a folder `.vscode` and add a new file called `settings.json` with the content below, to prevent vscode warnings:
+
+```json
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
+```
+
+Also, rename `postcss.config.js` to `postcss.config.cjs` to prevent ES module errors from PostCSS dependency.
 
 # React + TypeScript + Vite
 
