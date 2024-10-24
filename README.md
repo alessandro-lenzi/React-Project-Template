@@ -23,20 +23,20 @@ Run `npm i -D @types/node` to add path resolution for vite's configuration.
 Your `vite.config.js` should be like:
 
 ```js
-import * as path from "path";
+import * as path from 'path'
 
-import react from "@vitejs/plugin-react-swc";
-import { defineConfig } from "vite";
-import svgr from "vite-plugin-svgr";
+import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite'
+import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 
 export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
-    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
-});
+})
 ```
 
 Add the following lines to your `tsconfig.json` file (or `tsconfig.app.json` and `tsconfig.node.json` separately, if needed), under the `compilerOptions` key:
@@ -64,12 +64,12 @@ Your `tailwind.config.js` should be like this:
 ```js
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{html,js,ts,tsx}"],
+  content: ['./src/**/*.{html,js,ts,tsx}'],
   theme: {
     extend: {},
   },
   plugins: [],
-};
+}
 ```
 
 Create a folder `.vscode` and add a new file called `settings.json` with the content below, to prevent vscode warnings:
@@ -104,63 +104,139 @@ const config = {
   printWidth: 80,
   tabWidth: 2,
   singleQuote: true,
-  trailingComma: "es5",
-  arrowParens: "always",
+  trailingComma: 'es5',
+  arrowParens: 'always',
   semi: false,
-  endOfLine: "auto",
-  plugins: ["prettier-plugin-tailwindcss"],
-};
+  endOfLine: 'auto',
+  plugins: ['prettier-plugin-tailwindcss'],
+}
 
-export default config;
+export default config
 ```
 
-# React + TypeScript + Vite
+### 8. Add auto fix/sort imports with ESLint
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Run `npm i -D eslint-plugin-import eslint-import-resolver-typescript` to install the eslint plugin for auto fixing import sorting.
 
-Currently, two official plugins are available:
+Run `npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser` to install dependencies that will solve path resolving issues between import plugin and path aliases configurations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 9. ESLint configuration
 
-## Expanding the ESLint configuration
+ESLint configuration is extensive and a pain to set it correctly.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
+Below you can see the final version I got after making all the previous steps working accordingly. If something is not working properly, verify if your `eslint.config.js` looks like this:
 
 ```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
+import js from '@eslint/js'
+import eslintConfigPrettier from 'eslint-config-prettier'
+import importPlugin from 'eslint-plugin-import'
+import eslintPluginPrettier from 'eslint-plugin-prettier/recommended'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
+
+export default tseslint.config(
+  { ignores: ['dist'] },
+  react.configs.flat.recommended,
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
+  eslintConfigPrettier,
+  eslintPluginPrettier,
+  {
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.stylistic,
+    ],
+    files: ['**/*.{ts,tsx,js,jsx}'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      globals: globals.browser,
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      },
     },
-  },
-});
+    settings: {
+      react: { version: 'detect' },
+      'import/resolver': {
+        typescript: { project: 'tsconfig.app.json' },
+      },
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.tsx'],
+      },
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...react.configs.recommended.rules,
+      ...react.configs['jsx-runtime'].rules,
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      'import/no-dynamic-require': 'warn',
+      'import/no-nodejs-modules': 'warn',
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal'],
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@/services/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/hooks/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/contexts/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/containers/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/styles/**',
+              group: 'internal',
+              position: 'before',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['builtin'],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+    },
+  }
+)
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Testing your setup
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+Run `npm run dev`. ;P
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+You should have something like this:

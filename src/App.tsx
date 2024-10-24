@@ -1,9 +1,13 @@
 import { useState } from 'react'
+
+import { clsx } from 'clsx'
+
+import { TestAlias } from '@/components/TestAlias'
+
 import ReactLogo from './assets/react.svg?react'
 import ViteLogo from './assets/vite.svg?react'
-import { TestAlias } from '@/components/TestAlias'
+
 import './App.css'
-import { clsx } from 'clsx'
 
 function App() {
   const [count, setCount] = useState(0)
