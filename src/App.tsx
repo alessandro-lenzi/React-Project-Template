@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import ReactLogo from './assets/react.svg?react';
-import ViteLogo from './assets/vite.svg?react';
-import { TestAlias } from '@/components/TestAlias';
-import './App.css';
-import { clsx } from 'clsx';
+import { useState } from 'react'
+import ReactLogo from './assets/react.svg?react'
+import ViteLogo from './assets/vite.svg?react'
+import { TestAlias } from '@/components/TestAlias'
+import './App.css'
+import { clsx } from 'clsx'
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <a href="https://vite.dev" target="_blank">
+        <a href="https://vite.dev" target="_blank" rel="noreferrer">
           <ViteLogo className="logo" title="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <ReactLogo className="logo react" title="React logo" />
         </a>
       </div>
@@ -37,11 +37,12 @@ function App() {
           'font-bold': true,
           underline: true,
           italic: false,
-        })}>
+        })}
+      >
         Hello world with TailwindCSS!
       </h1>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

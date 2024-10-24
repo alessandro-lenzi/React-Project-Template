@@ -1,3 +1,3 @@
 export const TestAlias = () => {
-  return <div>Test with @ alias path works.</div>;
-};
+  return <div>Test with @ alias path works.</div>
+}

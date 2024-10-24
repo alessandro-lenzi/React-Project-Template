@@ -4,37 +4,37 @@ A React standard template with TS, Eslint, TailwindCSS and productive configurat
 
 ## Steps
 
-1. Create a directory for your project, e.g. "my-project"
+### 1. Create a directory for your project, e.g. "my-project"
 
 Run `cd [my-project]` to enter the project folder.
 
-2. Vite + React + SWC setup
+### 2. Vite + React + SWC setup
 
 Run `npm create vite@latest .` to create the project using the latest Vite, with React + SWC support.
 
-3. SVG component support on React
+### 3. SVG component support on React
 
 Run `npm i -D vite-plugin-svgr` to add easy SVG support with svgr library and with vite configuration. Follow [vite-plugin-svgr installation steps](https://github.com/pd4d10/vite-plugin-svgr) to finish it's setup.
 
-4. Add alias path support: @/... for imports
+### 4. Add alias path support: @/... for imports
 
 Run `npm i -D @types/node` to add path resolution for vite's configuration.
 
 Your `vite.config.js` should be like:
 
 ```js
-import * as path from 'path';
+import * as path from "path";
 
-import react from '@vitejs/plugin-react-swc';
-import { defineConfig } from 'vite';
-import svgr from 'vite-plugin-svgr';
+import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from "vite";
+import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 
 export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
-    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },
 });
 ```
@@ -51,7 +51,7 @@ Add the following lines to your `tsconfig.json` file (or `tsconfig.app.json` and
   }
 ```
 
-5. Install Tailwind CSS
+### 5. Install Tailwind CSS
 
 Run `npm i -D tailwindcss postcss autoprefixer` to add tailwind and its peer dependencies.
 
@@ -64,7 +64,7 @@ Your `tailwind.config.js` should be like this:
 ```js
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js,ts,tsx}'],
+  content: ["./src/**/*.{html,js,ts,tsx}"],
   theme: {
     extend: {},
   },
@@ -86,6 +86,34 @@ Run `npm i --save clsx` to add [clsx](https://github.com/lukeed/clsx) support fo
 
 Also, rename `postcss.config.js` to `postcss.config.cjs` to prevent ES module errors from PostCSS dependency.
 
+### 6. Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) for React specific linting rules
+
+### 7. Install prettier
+
+Run `npm i -D prettier prettier-plugin-tailwindcss eslint-config-prettier eslint-plugin-prettier` to install prettier and its dependencies to work along with eslint.
+
+Create the file `prettier.config.js` with the content below:
+
+```js
+/**
+ * @see https://prettier.io/docs/en/configuration.html
+ * @type {import("prettier").Config}
+ */
+
+const config = {
+  printWidth: 80,
+  tabWidth: 2,
+  singleQuote: true,
+  trailingComma: "es5",
+  arrowParens: "always",
+  semi: false,
+  endOfLine: "auto",
+  plugins: ["prettier-plugin-tailwindcss"],
+};
+
+export default config;
+```
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -106,7 +134,7 @@ export default tseslint.config({
   languageOptions: {
     // other options...
     parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
       tsconfigRootDir: import.meta.dirname,
     },
   },
@@ -119,11 +147,11 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react';
+import react from "eslint-plugin-react";
 
 export default tseslint.config({
   // Set the react version
-  settings: { react: { version: '18.3' } },
+  settings: { react: { version: "18.3" } },
   plugins: {
     // Add the react plugin
     react,
@@ -132,7 +160,7 @@ export default tseslint.config({
     // other rules...
     // Enable its recommended rules
     ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
+    ...react.configs["jsx-runtime"].rules,
   },
 });
 ```
