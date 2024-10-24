@@ -3,6 +3,7 @@ import ReactLogo from './assets/react.svg?react';
 import ViteLogo from './assets/vite.svg?react';
 import { TestAlias } from '@/components/TestAlias';
 import './App.css';
+import { clsx } from 'clsx';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,7 +31,13 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <TestAlias />
-      <h1 className="text-3xl font-bold underline">
+      <h1
+        className={clsx({
+          'text-3xl': true,
+          'font-bold': true,
+          underline: true,
+          italic: false,
+        })}>
         Hello world with TailwindCSS!
       </h1>
     </>
