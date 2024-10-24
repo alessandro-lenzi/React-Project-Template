@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ReactLogo from './assets/react.svg?react';
 import ViteLogo from './assets/vite.svg?react';
+import { TestAlias } from '@/components/TestAlias';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <TestAlias />
     </>
   );
 }

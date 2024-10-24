@@ -4,13 +4,52 @@ A React standard template with TS, Eslint, TailwindCSS and productive configurat
 
 ## Steps:
 
-Create a directory for your project, e.g. "my-project".
+1. Create a directory for your project, e.g. "my-project"
 
 `cd [my-project]` to enter the project folder.
 
+2. Vite + React + SWC setup
+
 `npm create vite@latest .` to create the project using the latest Vite, with React + SWC support.
 
+3. SVG component support on React
+
 `npm i -D vite-plugin-svgr` to add easy SVG support with svgr library and with vite configuration. Follow [vite-plugin-svgr installation steps](https://github.com/pd4d10/vite-plugin-svgr) to finish it's setup.
+
+4. Add alias path support: @/... for imports
+
+`npm i -D @types/node` to add path resolution for vite's configuration.
+
+Your `vite.config.js` should be like:
+
+```js
+import * as path from 'path';
+
+import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
+
+// https://vitejs.dev/config/
+
+export default defineConfig({
+  plugins: [react(), svgr()],
+  resolve: {
+    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+  },
+});
+```
+
+Add the following lines to your `tsconfig.json` file (or `tsconfig.app.json` and `tsconfig.node.json` separately, if needed), under the `compilerOptions` key:
+
+```json
+  ...
+  "compilerOptions": {
+    ...
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+```
 
 # React + TypeScript + Vite
 
